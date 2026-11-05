@@ -16,14 +16,22 @@ Most QML work starts from a model and applies it to a convenient dataset. In thi
 
 ## Starter Datasets
 
+See [hackathon-datasets.md](hackathon-datasets.md) for a description of each dataset and more links.
+
 | Property | Dataset | Link |
 |---|---|---|
-| Extreme class imbalance | Credit Card Fraud Detection (ULB, ~0.17% positive rate) | [link](TODO) |
-| Graph-structured, small N | Cora / Citeseer citation networks | [link](TODO) |
-| Graph-structured, small N | MoleculeNet subsets (BBBP, Tox21) | [link](TODO) |
-| High-dimensional, low N | Gene expression / single-cell RNA-seq | [link](TODO) |
-| Strong symmetry / invariance | Materials Project subsets (crystal structures) | [link](TODO) |
-| Rare events / anomalies | KDD Cup 99 network intrusion detection | [link](TODO) |
+| Rare events / extreme class imbalance | Google Quantum AI surface code experiments (real hardware) | [link](https://zenodo.org/records/13273331) |
+| Time series, high-dimensional | QDataSet (simulated qubit control and noise) | [link](https://github.com/eperrier/QDataSet) |
+| Strong symmetry / graph-structured | PennyLane spin systems (`qspin`) | [link](https://pennylane.ai/datasets) |
+| High-dimensional | MNISQ (classical images as quantum circuits) | [link](https://pennylane.ai/datasets/mnisq) |
+| Graph-structured, symmetry | QM9 (classical data from quantum chemistry) | [link](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.QM9.html) |
+| Extreme class imbalance | Credit Card Fraud Detection (ULB, ~0.17% positive rate) | [link](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) |
+| Graph-structured, small N | Cora / Citeseer citation networks | [link](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.Planetoid.html) |
+| Graph-structured, small N | MoleculeNet subsets (BBBP, Tox21) | [link](https://moleculenet.org/datasets-1) |
+| High-dimensional, low N | Gene expression / single-cell RNA-seq | [link](https://www.ncbi.nlm.nih.gov/geo/) |
+| Strong symmetry / invariance | Materials Project subsets (crystal structures) | [link](https://next-gen.materialsproject.org/) |
+| Rare events / anomalies | KDD Cup 99 network intrusion detection | [link](https://archive.ics.uci.edu/dataset/130/kdd+cup+1999+data) |
+| Graph-structured, extreme class imbalance | IBM Transactions for Anti-Money Laundering (AML) | [link](https://www.kaggle.com/datasets/ealtman2019/ibm-transactions-for-anti-money-laundering-aml) |
 
 ## Deliverables
 - Slides and a 5 minute presentation, with short Q&A.
