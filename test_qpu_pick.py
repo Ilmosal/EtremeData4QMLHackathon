@@ -138,6 +138,16 @@ def test_try_order_mock_mode_picks_only_free_mocks():
     assert try_order(states, qubits=5, mock=True) == ["garnet:mock"]
 
 
+def test_try_order_never_includes_emerald():
+    states = [state("emerald", 0, qubits=54), state("garnet", 3)]
+    assert try_order(states, qubits=5, slack=10) == ["garnet"]
+
+
+def test_try_order_allows_the_emerald_mock():
+    states = [state("emerald:mock", 0, qubits=54, mock=True, price=0.0)]
+    assert try_order(states, qubits=5, mock=True) == ["emerald:mock"]
+
+
 # pick_and_transpile
 
 def fake_backends(**by_alias):
@@ -171,6 +181,16 @@ def test_pick_and_transpile_fails_when_no_machine_fits():
             ghz(6),
             get_states=lambda: [state("adonis", 0, qubits=5)],
             get_backend=fake_backends(adonis=IQMFakeAdonis()),
+        )
+
+
+def test_pick_and_transpile_fails_when_only_emerald_fits():
+    # No backend is given for emerald, so asking for it would raise KeyError.
+    with pytest.raises(RuntimeError, match="no real machine"):
+        pick_and_transpile(
+            ghz(21),
+            get_states=lambda: [state("emerald", 0, qubits=54), state("garnet", 0)],
+            get_backend=fake_backends(garnet=IQMFakeGarnet()),
         )
 
 

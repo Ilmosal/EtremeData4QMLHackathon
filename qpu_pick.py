@@ -9,6 +9,9 @@ In a participant's script:
 
 Pass mock=True while debugging to use a free mock machine instead.
 
+The picker never picks the real Emerald. Its free mock, emerald:mock, is
+still allowed.
+
 To see every machine's state and the order the picker would try them in:
 
     python qpu_pick.py --qubits 5
@@ -31,6 +34,8 @@ SERVER = "https://resonance.iqm.tech"
 API = SERVER + "/api/v1"
 TOKEN_VARIABLE = "IQM_TOKEN"
 CLOCK_SKEW = timedelta(minutes=1)
+# Hackathon rule: no jobs on these machines, whatever their queue.
+BLOCKED = frozenset({"emerald"})
 
 
 def read_token(environ=os.environ):
@@ -97,11 +102,13 @@ def try_order(states, qubits, mock=False, slack=1, rng=random):
     Machines within `slack` jobs of the shortest queue come first, in random
     order, so that participants who ask at the same moment spread out.
     Mock mode only picks free mocks: the API prices some mocks above zero.
+    Machines in BLOCKED never appear.
     """
     fits = [
         s for s in states
         if s["ready"] and s["mock"] == mock and s["qubits"] >= qubits
         and not (mock and s["price"] > 0)
+        and s["alias"] not in BLOCKED
     ]
     if not fits:
         return []
@@ -152,10 +159,14 @@ def main():
     parser.add_argument("--mock", action="store_true", help="consider free mocks only")
     args = parser.parse_args()
     states = machine_states(read_token())
-    print("%-14s %-6s %5s %6s %9s" % ("machine", "ready", "queue", "qubits", "credits/s"))
+    print("%-14s %-7s %5s %6s %9s" % ("machine", "ready", "queue", "qubits", "credits/s"))
     for s in sorted(states, key=lambda s: s["alias"]):
-        print("%-14s %-6s %5d %6d %9.2f"
-              % (s["alias"], "yes" if s["ready"] else "no", s["queue"], s["qubits"], s["price"]))
+        if s["alias"] in BLOCKED:
+            ready = "blocked"
+        else:
+            ready = "yes" if s["ready"] else "no"
+        print("%-14s %-7s %5d %6d %9.2f"
+              % (s["alias"], ready, s["queue"], s["qubits"], s["price"]))
     order = try_order(states, args.qubits, args.mock)
     print("try order: %s" % (", ".join(order) or "no machine fits"))
 
