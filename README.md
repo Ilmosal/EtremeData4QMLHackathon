@@ -1,4 +1,4 @@
-# EtremeData4QMLHackathon
+# ExtremeData4QMLHackathon
 Repository for materials for the QSIP workshop Hackathon in quantum machine learning.
 
 ## Instructions
