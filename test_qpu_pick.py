@@ -6,7 +6,7 @@ from iqm.qiskit_iqm import IQMFakeAdonis, IQMFakeDeneb
 from iqm.qiskit_iqm.fake_backends.fake_garnet import IQMFakeGarnet
 from qiskit import QuantumCircuit
 
-from hackathon.qpu_pick import (
+from qpu_pick import (
     parse_state,
     pick_and_transpile,
     read_token,
